@@ -20,5 +20,5 @@ class ProductModel {
         title = json['title'],
         discount = json['discount'],
         imgUrl = json['image'],
-        prePrice = json['previous_price'];
+        prePrice = json['previous_price'] ?? json['price'];
 }
