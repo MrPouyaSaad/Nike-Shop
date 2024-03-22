@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nike_shop/common/theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,8 +14,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Nike',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        fontFamily: 'IranYekan',
+        colorScheme: const ColorScheme.light(
+          primary: LightThemeColors.primaryColor,
+          secondary: LightThemeColors.secondaryColor,
+          onSecondary: Colors.white,
+        ),
         useMaterial3: true,
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(color: LightThemeColors.primaryTextColor),
+          bodySmall: TextStyle(color: LightThemeColors.secondaryTextColor),
+          titleLarge: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
