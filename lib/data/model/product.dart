@@ -6,14 +6,7 @@ class ProductModel {
   int discount;
   String imgUrl;
   int prePrice;
-  ProductModel({
-    required this.id,
-    required this.price,
-    required this.title,
-    required this.discount,
-    required this.imgUrl,
-    required this.prePrice,
-  });
+
   ProductModel.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         price = json['price'],
