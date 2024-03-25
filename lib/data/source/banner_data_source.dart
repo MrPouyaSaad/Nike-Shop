@@ -5,7 +5,7 @@ import 'package:nike_shop/common/validate_res.dart';
 import 'package:nike_shop/data/model/banner.dart';
 
 abstract class IBannerDataSource {
-  Future<List<Bannermodel>> getBanners();
+  Future<List<BannerModel>> getBanners();
 }
 
 class BannerDataSource implements IBannerDataSource {
@@ -15,12 +15,12 @@ class BannerDataSource implements IBannerDataSource {
   });
 
   @override
-  Future<List<Bannermodel>> getBanners() async {
+  Future<List<BannerModel>> getBanners() async {
     final response = await httpClient.get('banner/slider');
 
     validateResponse(response);
 
-    final List<Bannermodel> banners = [];
+    final List<BannerModel> banners = [];
     (response.data as List).map((json) => banners.add(json));
     return banners;
   }

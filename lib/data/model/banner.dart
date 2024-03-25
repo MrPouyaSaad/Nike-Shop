@@ -1,8 +1,8 @@
-class Bannermodel {
+class BannerModel {
   final String imageUrl;
   final int id;
 
-  Bannermodel.fromJson(Map<String, dynamic> json)
+  BannerModel.fromJson(Map<String, dynamic> json)
       : imageUrl = json['image'],
         id = json['id'];
 }

@@ -7,7 +7,7 @@ final bannerRepository = BannerRepository(
     bannerDataSource: BannerDataSource(httpClient: httpClient));
 
 abstract class IBannerRepository {
-  Future<List<Bannermodel>> getBanners();
+  Future<List<BannerModel>> getBanners();
 }
 
 class BannerRepository implements IBannerRepository {
@@ -16,5 +16,5 @@ class BannerRepository implements IBannerRepository {
     required this.bannerDataSource,
   });
   @override
-  Future<List<Bannermodel>> getBanners() => bannerDataSource.getBanners();
+  Future<List<BannerModel>> getBanners() => bannerDataSource.getBanners();
 }

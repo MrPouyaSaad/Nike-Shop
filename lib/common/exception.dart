@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-class Exeption {
+class AppException {
   final String message;
-  Exeption({
+  AppException({
     this.message = 'خطا!',
   });
 }
