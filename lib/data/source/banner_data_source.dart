@@ -17,11 +17,11 @@ class BannerDataSource implements IBannerDataSource {
   @override
   Future<List<BannerModel>> getBanners() async {
     final response = await httpClient.get('banner/slider');
-
     validateResponse(response);
-
     final List<BannerModel> banners = [];
-    (response.data as List).map((json) => banners.add(json));
+    (response.data as List).forEach((jsonObject) {
+      banners.add(BannerModel.fromJson(jsonObject));
+    });
     return banners;
   }
 }

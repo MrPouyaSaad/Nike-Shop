@@ -19,6 +19,7 @@ class BannerSlider extends StatelessWidget {
       child: Stack(
         children: [
           PageView.builder(
+            reverse: true,
             controller: _controller,
             itemCount: banners.length,
             physics: scrollPhysics,
@@ -31,6 +32,14 @@ class BannerSlider extends StatelessWidget {
             child: Center(
               child: SmoothPageIndicator(
                 controller: _controller,
+                textDirection: TextDirection.rtl,
+                onDotClicked: (index) {
+                  _controller.animateToPage(
+                    index,
+                    duration: const Duration(milliseconds: 350),
+                    curve: Curves.ease,
+                  );
+                },
                 count: banners.length,
                 axisDirection: Axis.horizontal,
                 effect: WormEffect(

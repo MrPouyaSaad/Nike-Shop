@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:nike_shop/data/repository/banner_repository.dart';
 import 'package:nike_shop/data/repository/product_repository.dart';
 import 'package:nike_shop/screens/common/slider.dart';
@@ -32,7 +33,7 @@ class HomeScreen extends StatelessWidget {
                         return Image.asset(
                           'assets/images/nike_logo.png',
                           height: 32,
-                        );
+                        ).marginOnly(bottom: 16);
                       case 2:
                         return BannerSlider(banners: state.banners);
                       default:
