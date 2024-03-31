@@ -4,14 +4,14 @@ class ProductModel {
   int price;
   String title;
   int discount;
-  String imgUrl;
-  int prePrice;
+  String imageUrl;
+  int previousPrice;
 
   ProductModel.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         price = json['price'],
         title = json['title'],
         discount = json['discount'],
-        imgUrl = json['image'],
-        prePrice = json['previous_price'] ?? json['price'];
+        imageUrl = json['image'],
+        previousPrice = json['previous_price'] ?? json['price'];
 }

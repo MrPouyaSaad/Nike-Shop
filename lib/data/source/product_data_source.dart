@@ -21,8 +21,9 @@ class ProductDataSource implements IProductDataSource {
 
     List<ProductModel> products = [];
 
-    (response.data as List)
-        .map((json) => products.add(ProductModel.fromJson(json)));
+    (response.data as List).forEach((json) {
+      products.add(ProductModel.fromJson(json));
+    });
 
     return products;
   }
@@ -35,7 +36,7 @@ class ProductDataSource implements IProductDataSource {
 
     List<ProductModel> products = [];
 
-    (response.data as List).map((json) {
+    (response.data as List).forEach((json) {
       products.add(ProductModel.fromJson(json));
     });
 

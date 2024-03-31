@@ -27,9 +27,11 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(color: LightThemeColors.primaryTextColor),
           bodySmall: TextStyle(color: LightThemeColors.secondaryTextColor),
           titleLarge: TextStyle(fontWeight: FontWeight.bold),
+          titleMedium: TextStyle(color: LightThemeColors.secondaryTextColor),
         ),
       ),
-      home: const HomeScreen(),
+      home: const Directionality(
+          textDirection: TextDirection.rtl, child: HomeScreen()),
     );
   }
 }
