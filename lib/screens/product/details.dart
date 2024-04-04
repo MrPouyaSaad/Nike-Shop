@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nike_shop/common/exception.dart';
 import 'package:nike_shop/common/scroll_physics.dart';
@@ -88,11 +89,11 @@ class ProductDetailScreen extends StatelessWidget {
                             onPressed: () {}, child: const Text('ثبت نظر')),
                       ],
                     ),
-                    _CommentList(product: product),
                   ],
                 ),
               ),
-            )
+            ),
+            _CommentList(product: product),
           ],
         ),
       ),
@@ -109,6 +110,8 @@ class _CommentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return BlocProvider(
       create: (context) {
         final commentListBloc = CommentListBloc(
@@ -120,22 +123,70 @@ class _CommentList extends StatelessWidget {
       child: BlocBuilder<CommentListBloc, CommentListState>(
           builder: (context, state) {
         if (state is CommentListLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return const SliverToBoxAdapter(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
           );
         } else if (state is CommentListSuccess) {
-          return Container(
-            color: Colors.blue,
-            height: 1000,
-            width: 300,
+          return SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              final comment = state.comments[index];
+
+              return Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: themeData.dividerColor,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(4)),
+                padding: const EdgeInsets.all(12),
+                margin: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(comment.title),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            Text(
+                              comment.email,
+                              style: themeData.textTheme.bodySmall,
+                            ),
+                          ],
+                        ),
+                        Text(comment.date,
+                            style: themeData.textTheme.bodySmall),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Text(
+                      comment.content,
+                      style: const TextStyle(height: 1.4),
+                    ),
+                  ],
+                ),
+              );
+            }),
           );
         } else if (state is CommentListError) {
-          return AppExceptionWidget(
-            exceptionMessage: state.exception.message,
-            onTap: () {
-              BlocProvider.of<CommentListBloc>(context)
-                  .add(CommentListRefreshed());
-            },
+          return SliverToBoxAdapter(
+            child: AppExceptionWidget(
+              exceptionMessage: state.exception.message,
+              onTap: () {
+                BlocProvider.of<CommentListBloc>(context)
+                    .add(CommentListRefreshed());
+              },
+            ),
           );
         } else {
           throw Exception('state is not supported');
