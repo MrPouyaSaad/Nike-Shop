@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nike_shop/common/theme.dart';
-import 'package:nike_shop/screens/home/home_screen.dart';
 import 'package:nike_shop/screens/root.dart';
 
 void main() {

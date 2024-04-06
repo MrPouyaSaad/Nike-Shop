@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:nike_shop/common/exception.dart';
 import 'package:nike_shop/common/scroll_physics.dart';
 import 'package:nike_shop/common/theme.dart';
@@ -10,6 +12,7 @@ import 'package:nike_shop/data/repository/comment_repository.dart';
 import 'package:nike_shop/screens/common/image_service.dart';
 import 'package:nike_shop/screens/common/price.dart';
 import 'package:nike_shop/screens/product/bloc/comment_list_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   final ProductModel product;
@@ -111,7 +114,8 @@ class _CommentList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-
+    final Color shimmerBaseColor = Colors.grey.shade300;
+    final double shimmerBodyHeight = 22;
     return BlocProvider(
       create: (context) {
         final commentListBloc = CommentListBloc(
@@ -123,9 +127,68 @@ class _CommentList extends StatelessWidget {
       child: BlocBuilder<CommentListBloc, CommentListState>(
           builder: (context, state) {
         if (state is CommentListLoading) {
-          return const SliverToBoxAdapter(
-            child: Center(
-              child: CircularProgressIndicator(),
+          return SliverToBoxAdapter(
+            child: Shimmer.fromColors(
+              direction: ShimmerDirection.rtl,
+              baseColor: shimmerBaseColor,
+              highlightColor: Colors.white,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width / 3,
+                              height: shimmerBodyHeight - 4,
+                              color: shimmerBaseColor,
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width / 2,
+                              height: shimmerBodyHeight - 6,
+                              color: shimmerBaseColor,
+                            )
+                          ],
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 5,
+                          height: shimmerBodyHeight - 10,
+                          color: shimmerBaseColor,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: shimmerBodyHeight,
+                      color: shimmerBaseColor,
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      width: MediaQuery.of(context).size.width / 1.7,
+                      height: shimmerBodyHeight,
+                      color: shimmerBaseColor,
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      width: MediaQuery.of(context).size.width / 3,
+                      height: shimmerBodyHeight,
+                      color: shimmerBaseColor,
+                    )
+                  ],
+                ),
+              ).paddingAll(12),
             ),
           );
         } else if (state is CommentListSuccess) {
