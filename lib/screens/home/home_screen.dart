@@ -2,9 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:nike_shop/common/const.dart';
 import 'package:nike_shop/common/exception.dart';
-
-import 'package:nike_shop/common/scroll_physics.dart';
 import 'package:nike_shop/data/model/product.dart';
 import 'package:nike_shop/data/repository/banner_repository.dart';
 import 'package:nike_shop/data/repository/product_repository.dart';
@@ -107,7 +106,7 @@ class _HorizontalProductList extends StatelessWidget {
         SizedBox(
           height: 290,
           child: ListView.builder(
-            physics: scrollPhysics,
+            physics: Constants.scrollPhysics,
             itemCount: products.length,
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.only(left: 8, right: 8),

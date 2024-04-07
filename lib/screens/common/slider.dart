@@ -1,8 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:nike_shop/common/const.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
-import 'package:nike_shop/common/scroll_physics.dart';
 import 'package:nike_shop/data/model/banner.dart';
 import 'package:nike_shop/screens/common/image_service.dart';
 
@@ -21,7 +20,7 @@ class BannerSlider extends StatelessWidget {
           PageView.builder(
             controller: _controller,
             itemCount: banners.length,
-            physics: scrollPhysics,
+            physics: Constants.scrollPhysics,
             itemBuilder: (context, index) => _Slide(banner: banners[index]),
           ),
           Positioned(

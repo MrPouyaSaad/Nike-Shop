@@ -46,10 +46,12 @@ class _RootScreenState extends State<RootScreen> {
     } else {
       setState(() {
         FloatingSnackBar(
-          message: 'برای خروج دوبار پشت سر هم دکمه برگشت را بزنید!',
+          message: 'برای خروج دوبار دکمه برگشت را بزنید!',
           context: context,
           textColor: Colors.white,
-          textStyle: const TextStyle(color: Colors.white),
+          textStyle: const TextStyle(
+            color: Colors.white,
+          ),
           duration: const Duration(milliseconds: 3000),
           backgroundColor: LightThemeColors.primaryTextColor,
         );
