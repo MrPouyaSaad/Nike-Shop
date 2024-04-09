@@ -18,8 +18,7 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
           final comments = await commentRepository.getComments(id);
           emit(CommentListSuccess(comments: comments));
         } catch (e) {
-          emit(
-              CommentListError(exception: AppException(message: e.toString())));
+          emit(CommentListError(exception: AppException()));
         }
       }
     });
