@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 import 'package:nike_shop/common/const.dart';
 import 'package:nike_shop/data/model/auth.dart';
 import 'package:nike_shop/data/source/auth_data_source.dart';
@@ -13,6 +12,7 @@ abstract class IAuthRepository {
   Future<void> login({required String username, required String password});
   Future<void> register({required String username, required String password});
   Future<void> refreshToken(String token);
+  Future<void> signOut();
 }
 
 class AuthRepository implements IAuthRepository {
@@ -49,6 +49,8 @@ class AuthRepository implements IAuthRepository {
 
     sharedPreferences.setString("access_token", authModel.accessToken);
     sharedPreferences.setString("refresh_token", authModel.refreshToken);
+
+    getAuthInfo();
   }
 
   Future<void> getAuthInfo() async {
@@ -62,5 +64,14 @@ class AuthRepository implements IAuthRepository {
       authNotifier.value =
           AuthModel(accessToken: accessToken, refreshToken: refreshToken);
     }
+  }
+
+  @override
+  Future<void> signOut() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+
+    sharedPreferences.clear();
+    authNotifier.value = null;
   }
 }

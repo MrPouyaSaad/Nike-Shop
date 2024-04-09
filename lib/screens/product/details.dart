@@ -97,9 +97,9 @@ class ProductDetailScreen extends StatelessWidget {
               ),
             ),
             _CommentList(product: product),
-            // const SliverToBoxAdapter(
-            //   child: SizedBox(height: 128),
-            // )
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 160),
+            )
           ],
         ),
       ),
@@ -285,7 +285,7 @@ class CommentLoadingWidget extends StatelessWidget {
             ],
           ),
         ).paddingAll(12),
-      ).marginOnly(bottom: 160),
+      ),
     );
   }
 }

@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
 import 'package:nike_shop/common/const.dart';
 import 'package:nike_shop/common/validate_res.dart';
 
@@ -42,6 +43,7 @@ class AuthDataSource implements IAuthDataSorce {
       'client_secret': Constants.clientSecret,
     });
     validateResponse(response);
+    print(response.data['access_token']);
     return AuthModel(
         accessToken: response.data['access_token'],
         refreshToken: response.data['refresh_token']);

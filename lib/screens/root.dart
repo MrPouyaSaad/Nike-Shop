@@ -2,6 +2,7 @@ import 'package:floating_snackbar/floating_snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nike_shop/common/theme.dart';
+import 'package:nike_shop/screens/cart/cart.dart';
 import 'package:nike_shop/screens/home/home_screen.dart';
 
 const int homeIndex = 0;
@@ -75,12 +76,7 @@ class _RootScreenState extends State<RootScreen> {
           index: selectedScreenIndex,
           children: [
             _navigator(_homeKey, homeIndex, const HomeScreen()),
-            _navigator(
-                _cartKey,
-                cartIndex,
-                const Center(
-                  child: Text('Cart'),
-                )),
+            _navigator(_cartKey, cartIndex, const CartScreen()),
             _navigator(
                 _profileKey,
                 profileIndex,
