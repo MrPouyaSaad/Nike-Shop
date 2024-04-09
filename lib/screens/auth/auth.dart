@@ -1,4 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
+import 'package:nike_shop/common/theme.dart';
+import 'package:nike_shop/data/repository/auth_repository.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -9,33 +13,38 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   bool isLogin = true;
+  TextStyle textFieldStyle = TextStyle(color: LightThemeColors.onBackgroud);
+  final TextEditingController usernameController =
+      TextEditingController(text: 'test@gmail.com');
+  final TextEditingController passwordController =
+      TextEditingController(text: '123456');
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-    const onBackground = Colors.white;
+    const onBackground = LightThemeColors.onBackgroud;
     return Theme(
       data: themeData.copyWith(
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ButtonStyle(
-                minimumSize: MaterialStateProperty.all(
-                  const Size.fromHeight(56),
-                ),
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                )),
-                backgroundColor: MaterialStateProperty.all(onBackground),
-                foregroundColor:
-                    MaterialStateProperty.all(themeData.colorScheme.secondary)),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            minimumSize: const Size.fromHeight(56),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            backgroundColor: (onBackground),
+            foregroundColor: (themeData.colorScheme.secondary),
           ),
-          colorScheme: themeData.colorScheme.copyWith(onSurface: onBackground),
-          inputDecorationTheme: InputDecorationTheme(
-              labelStyle: const TextStyle(
-                color: onBackground,
-              ),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide:
-                      const BorderSide(color: Colors.white, width: 1)))),
+        ),
+        colorScheme: themeData.colorScheme.copyWith(onSurface: onBackground),
+        inputDecorationTheme: InputDecorationTheme(
+          labelStyle: const TextStyle(color: onBackground),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: onBackground, width: 1)),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: onBackground, width: 1)),
+        ),
+      ),
       child: Scaffold(
         backgroundColor: themeData.colorScheme.secondary,
         body: Padding(
@@ -45,7 +54,7 @@ class _AuthScreenState extends State<AuthScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/img/nike_logo.png',
+                'assets/images/nike_logo.png',
                 color: Colors.white,
                 width: 120,
               ),
@@ -54,36 +63,54 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
               Text(
                 isLogin ? 'خوش آمدید' : 'ثبت نام',
-                style: const TextStyle(color: onBackground, fontSize: 22),
+                style: const TextStyle(
+                    color: onBackground,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold),
               ),
               const SizedBox(
-                height: 16,
+                height: 32,
               ),
               Text(
                 isLogin
                     ? 'لطفا وارد حساب کاربری خود شوید'
                     : 'ایمیل و رمز عبور خود را تعیین کنید',
-                style: const TextStyle(color: onBackground, fontSize: 16),
+                style: const TextStyle(color: onBackground, fontSize: 14),
               ),
               const SizedBox(
                 height: 24,
               ),
-              const TextField(
+              TextField(
+                controller: usernameController,
+                style: textFieldStyle,
                 keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   label: Text('آدرس ایمیل'),
                 ),
               ),
               const SizedBox(
                 height: 16,
               ),
-              const _PasswordTextField(onBackground: onBackground),
+              _PasswordTextField(
+                onBackground: onBackground,
+                passwordController: passwordController,
+                textFieldStyle: textFieldStyle,
+              ),
               const SizedBox(
                 height: 16,
               ),
               ElevatedButton(
-                onPressed: () {},
-                child: Text(isLogin ? 'ورود' : 'ثبت نام'),
+                onPressed: () async {
+                  await authRepository.login(
+                    username: usernameController.text,
+                    password: passwordController.text,
+                  );
+                },
+                child: Text(
+                  isLogin ? 'ورود' : 'ثبت نام',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 14),
+                ),
               ),
               const SizedBox(
                 height: 24,
@@ -107,8 +134,10 @@ class _AuthScreenState extends State<AuthScreen> {
                     Text(
                       isLogin ? 'ثبت نام' : 'ورود',
                       style: TextStyle(
-                          color: themeData.colorScheme.primary,
-                          decoration: TextDecoration.underline),
+                        color: themeData.colorScheme.primary,
+                        decoration: TextDecoration.underline,
+                        decorationColor: themeData.colorScheme.primary,
+                      ),
                     ),
                   ],
                 ),
@@ -124,10 +153,13 @@ class _AuthScreenState extends State<AuthScreen> {
 class _PasswordTextField extends StatefulWidget {
   const _PasswordTextField({
     required this.onBackground,
-  });
+    required this.passwordController,
+    required this.textFieldStyle,
+  }) : super();
 
   final Color onBackground;
-
+  final TextEditingController passwordController;
+  final TextStyle textFieldStyle;
   @override
   State<_PasswordTextField> createState() => _PasswordTextFieldState();
 }
@@ -138,6 +170,8 @@ class _PasswordTextFieldState extends State<_PasswordTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: widget.passwordController,
+      style: widget.textFieldStyle,
       keyboardType: TextInputType.visiblePassword,
       obscureText: obsecureText,
       decoration: InputDecoration(

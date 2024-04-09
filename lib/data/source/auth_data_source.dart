@@ -34,15 +34,27 @@ class AuthDataSource implements IAuthDataSorce {
   }
 
   @override
-  Future<AuthModel> refreshToken(String token) {
-    // TODO: implement refreshToken
-    throw UnimplementedError();
+  Future<AuthModel> refreshToken(String token) async {
+    final response = await httpClient.post('auth/token', data: {
+      'grant_type': 'password',
+      'refresh_token': token,
+      'client_id': 2,
+      'client_secret': Constants.clientSecret,
+    });
+    validateResponse(response);
+    return AuthModel(
+        accessToken: response.data['access_token'],
+        refreshToken: response.data['refresh_token']);
   }
 
   @override
   Future<AuthModel> register(
-      {required String username, required String password}) {
-    // TODO: implement register
-    throw UnimplementedError();
+      {required String username, required String password}) async {
+    final response = await httpClient.post('user/register', data: {
+      "email": username,
+      "password": password,
+    });
+    validateResponse(response);
+    return login(username: username, password: password);
   }
 }
